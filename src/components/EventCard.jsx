@@ -12,7 +12,7 @@ export default function EventCard({ event }) {
       <div className="relative h-60 w-full overflow-hidden">
         <Image
           src={image}
-          alt={title}
+          alt="Event Logo"
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-500"
         />

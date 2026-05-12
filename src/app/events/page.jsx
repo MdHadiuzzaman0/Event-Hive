@@ -10,7 +10,6 @@ export default async function AllEventsPage() {
     return (
         <div className="min-h-screen bg-zinc-50 py-12 px-6">
             <div className="max-w-7xl mx-auto">
-
                        
                 <div className="mb-10">
                     <h1 className="text-5xl font-black uppercase tracking-tighter text-zinc-900">
@@ -21,7 +20,6 @@ export default async function AllEventsPage() {
                     </p>
                 </div>
 
-                {/* স্ট্যাটিক ফিল্টার এবং সর্ট সেকশন (রেফারেন্স ইমেজ অনুযায়ী) */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12 bg-white p-4 shadow-sm border border-zinc-200">
                     <div className="md:col-span-1">
                         <Select className="w-[256px]" placeholder="All Categories" variant="bordered">
@@ -100,7 +98,6 @@ export default async function AllEventsPage() {
                     </div>
                 </div>
 
-                {/* ইভেন্ট গ্রিড সেকশন */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     {events.length > 0 ? (
                         events.map((event) => (
@@ -111,6 +108,7 @@ export default async function AllEventsPage() {
                             <p className="text-zinc-400 text-xl font-bold uppercase tracking-widest">
                                 No Events Found
                             </p>
+                            
                         </div>
                     )}
                 </div>

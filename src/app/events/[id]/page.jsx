@@ -2,19 +2,23 @@ import { getEventById } from '@/lib/data';
 import Image from "next/image";
 import { Button, Card, Chip, Tooltip } from "@heroui/react";
 import { Calendar, MapPin, Clock, Users, Ticket, CheckCircle2, ChevronLeft, Share2, Info, Edit3, Trash2, ShieldCheck } from "lucide-react";
+import Link from 'next/link';
+import DeleteButton from '@/components/DeleteButton';
+import EditButton from '@/components/EditButton';
 
 const EventDetails = async ({ params }) => {
   const { id } = await params;
   const event = await getEventById(id);
 
-  if (!event) return <div className="min-h-screen bg-black flex items-center justify-center text-cyan-500 font-black tracking-[0.2em]">EVENT_NOT_FOUND</div>;
+  if (!event) 
+    return <div className="h-250 bg-black/30 flex items-center justify-center text-cyan-600 font-bold text-4xl tracking-[0.2em]">EVENT_NOT_FOUND</div>;
 
   return (
     <div className="min-h-screen bg-[#020203] text-zinc-100 pb-20 selection:bg-cyan-500 selection:text-black">
-      
-      {/* স্টিকি টপ বার: অ্যাকশন বাটন সহ */}
+
       <div className="sticky top-0 z-50 w-full bg-black/60 backdrop-blur-xl border-b border-white/5 px-6 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <Link href="/events">
           <Button
             variant="light"
             className="text-zinc-400 hover:text-cyan-400 font-bold uppercase tracking-tighter"
@@ -22,22 +26,11 @@ const EventDetails = async ({ params }) => {
           >
             Back to Explore
           </Button>
+          </Link>
           
-          <div className="flex gap-3">
-            <Button 
-              isIconOnly
-              variant="flat"
-              className="bg-zinc-800/50 text-zinc-300 border border-white/10 hover:border-cyan-500 rounded-none"
-            >
-              <Edit3 size={18} />
-            </Button>
-            <Button 
-              isIconOnly
-              variant="flat"
-              className="bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white rounded-none transition-all"
-            >
-              <Trash2 size={18} />
-            </Button>
+          <div className="flex gap-3 w-65">
+            <EditButton id={event._id}/>
+            <DeleteButton id={event._id} title={event.title}/>
           </div>
         </div>
       </div>

@@ -1,143 +1,176 @@
-// "use client";
-import { Button, Input, Select, SelectItem, Textarea, Card } from "@heroui/react";
-import { Calendar, MapPin, Tag, DollarSign, Clock, ImageIcon, AlignLeft, PlusCircle, XCircle } from "lucide-react";
+"use client";
+import { eventCreate } from "@/lib/action";
+import { Button, Input, Select, Label, ListBox, TextArea, Card, TextField, FieldError } from "@heroui/react";
 
-export default function AddEventPage( ) {
-  // ইভেন্ট ক্যাটাগরি লিস্ট
-  // const categories = [
-  //   { label: "Music Festival", value: "music" },
-  //   { label: "Tech Conference", value: "tech" },
-  //   { label: "Workshop", value: "workshop" },
-  //   { label: "Business Seminar", value: "business" },
-  //   { label: "Art Exhibition", value: "art" },
-  // ];
-
+export default function AddEventPage() {
+  const [totalTier, serTotalTier] = useState(1)
+  
   return (
-    // <div className="min-h-screen bg-zinc-50 py-12 px-4 flex justify-center items-center">
-    //   <Card className="w-full max-w-3xl p-8 shadow-xl border border-zinc-200 rounded-none">
-    //     <div className="mb-8 border-b border-zinc-100 pb-4">
-    //       <h1 className="text-3xl font-black uppercase tracking-tighter text-zinc-800">
-    //         Post a New <span className="text-cyan-500">Event</span>
-    //       </h1>
-    //       <p className="text-zinc-500 text-sm">Fill in the details to launch your next big experience.</p>
-    //     </div>
+    <div className="min-h-screen bg-zinc-50 py-12 px-4 flex justify-center items-center">
+      <Card className="w-full max-w-4xl p-8 shadow-xl border border-zinc-200 rounded-none">
+        <div className="mb-8 border-b border-zinc-100 pb-4">
+          <h1 className="text-3xl font-black uppercase tracking-tighter text-zinc-800">
+            Post a New <span className="text-cyan-500">Event</span>
+          </h1>
+          <p className="text-zinc-500 text-sm">Fill in the details to launch your next big experience.</p>
+        </div>
 
-    //     <form action={createEventAction} className="flex flex-col gap-6">
-    //       {/* ১. ইভেন্ট টাইটেল (Destination Name এর বদলে) */}
-    //       <Input
-    //         isRequired
-    //         name="title"
-    //         label="Event Title"
-    //         placeholder="e.g. Global Tech Summit 2024"
-    //         labelPlacement="outside"
-    //         startContent={<Tag size={18} className="text-zinc-400" />}
-    //         className="font-medium"
-    //       />
+        <form action={eventCreate} className="p-4 md:p-10 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-    //       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    //         {/* ২. লোকেশন (Country এর বদলে) */}
-    //         <Input
-    //           isRequired
-    //           name="location"
-    //           label="Location / Venue"
-    //           placeholder="City, State or Full Address"
-    //           labelPlacement="outside"
-    //           startContent={<MapPin size={18} className="text-zinc-400" />}
-    //         />
+            {/* Title */}
+            <div className="md:col-span-2">
+              <TextField name="title" isRequired>
+                <Label>Event Title</Label>
+                <Input placeholder="e.g. Global Tech Summit 2026" className="rounded-2xl" />
+                <FieldError />
+              </TextField>
+            </div>
 
-    //         {/* ৩. ক্যাটাগরি */}
-    //         <Select
-    //           isRequired
-    //           name="category"
-    //           label="Category"
-    //           placeholder="Select Event Type"
-    //           labelPlacement="outside"
-    //           startContent={<PlusCircle size={18} className="text-zinc-400" />}
-    //         >
-    //           {categories.map((cat) => (
-    //             <SelectItem key={cat.value} value={cat.value}>
-    //               {cat.label}
-    //             </SelectItem>
-    //           ))}
-    //         </Select>
-    //       </div>
+            {/* Location */}
+            <TextField name="location" isRequired>
+              <Label>Location / Venue</Label>
+              <Input placeholder="Silicon Valley, CA" className="rounded-2xl" />
+              <FieldError />
+            </TextField>
 
-    //       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    //         {/* ৪. প্রাইস */}
-    //         <Input
-    //           isRequired
-    //           name="price"
-    //           type="number"
-    //           label="Ticket Price (USD)"
-    //           placeholder="0.00 (Put 0 for Free)"
-    //           labelPlacement="outside"
-    //           startContent={<DollarSign size={18} className="text-zinc-400" />}
-    //         />
+            {/* Category */}
+            <div>
+              <Select name="category" isRequired className="w-full" placeholder="Select category">
+                <Label>Category</Label>
+                <Select.Trigger>
+                  <Select.Value className="uppercase" />
+                </Select.Trigger>
+                <Select.Popover>
+                  <ListBox>
+                    <ListBox.Item id="Tech Conference" textValue="Tech Conference">Tech Conference</ListBox.Item>
+                    <ListBox.Item id="Music Festival" textValue="Music Festival">Music Festival</ListBox.Item>
+                    <ListBox.Item id="Art Exhibition" textValue="Art Exhibition">Art Exhibition</ListBox.Item>
+                    <ListBox.Item id="Workshop" textValue="Workshop">Workshop</ListBox.Item>
+                    <ListBox.Item id="Business Seminar" textValue="Business Seminar">Business Seminar</ListBox.Item>
+                  </ListBox>
+                </Select.Popover>
+              </Select>
+            </div>
 
-    //         {/* ৫. ডিউরেশন */}
-    //         <Input
-    //           isRequired
-    //           name="duration"
-    //           label="Duration"
-    //           placeholder="e.g. 3 Hours / 2 Days"
-    //           labelPlacement="outside"
-    //           startContent={<Clock size={18} className="text-zinc-400" />}
-    //         />
-    //       </div>
+            {/* Price */}
+            <TextField name="price" type="number" isRequired>
+              <Label>Price (USD)</Label>
+              <Input type="number" placeholder="499" className="rounded-2xl" />
+              <FieldError />
+            </TextField>
 
-    //       {/* ৬. ইভেন্ট ডেট (Departure Date এর বদলে) */}
-    //       <Input
-    //         isRequired
-    //         name="date"
-    //         type="date"
-    //         label="Event Date"
-    //         labelPlacement="outside"
-    //         startContent={<Calendar size={18} className="text-zinc-400" />}
-    //       />
+            {/* Duration */}
+            <TextField name="duration" isRequired>
+              <Label>Duration</Label>
+              <Input placeholder="e.g. 3 Days" className="rounded-2xl" />
+              <FieldError />
+            </TextField>
 
-    //       {/* ৭. ইমেজ ইউআরএল */}
-    //       <Input
-    //         isRequired
-    //         name="image"
-    //         type="url"
-    //         label="Event Banner URL"
-    //         placeholder="https://example.com/banner.jpg"
-    //         labelPlacement="outside"
-    //         startContent={<ImageIcon size={18} className="text-zinc-400" />}
-    //       />
+            {/* Date */}
+            <TextField name="date" type="date" isRequired>
+              <Label>Event Date</Label>
+              <Input type="date" className="rounded-2xl" />
+              <FieldError />
+            </TextField>
 
-    //       {/* ৮. ডেসক্রিপশন */}
-    //       <Textarea
-    //         isRequired
-    //         name="description"
-    //         label="Event Description"
-    //         placeholder="Describe what makes this event special..."
-    //         labelPlacement="outside"
-    //         minRows={4}
-    //         startContent={<AlignLeft size={18} className="text-zinc-400 mt-2" />}
-    //       />
+            {/* Participants */}
+            <TextField name="participants" type="number" isRequired>
+              <Label>Max Participants</Label>
+              <Input type="number" placeholder="200" className="rounded-2xl" />
+              <FieldError />
+            </TextField>
 
-    //       {/* বাটন সেকশন */}
-    //       <div className="flex justify-end gap-4 mt-4 border-t border-zinc-100 pt-6">
-    //         <Button 
-    //           variant="flat" 
-    //           color="danger" 
-    //           className="rounded-none font-bold uppercase px-8"
-    //           startContent={<XCircle size={18} />}
-    //         >
-    //           Cancel
-    //         </Button>
-    //         <Button 
-    //           type="submit" 
-    //           className="bg-cyan-500 text-white rounded-none font-bold uppercase px-8 hover:bg-cyan-600"
-    //           startContent={<PlusCircle size={18} />}
-    //         >
-    //           Publish Event
-    //         </Button>
-    //       </div>
-    //     </form>
-    //   </Card>
-    // </div>
-   <>add event</>
+            {/* Organizer */}
+            <TextField name="organizer" isRequired>
+              <Label>Organizer Name</Label>
+              <Input placeholder="Tech Innovators Hub" className="rounded-2xl" />
+              <FieldError />
+            </TextField>
+
+            {/* Image URL */}
+            <div className="md:col-span-2">
+              <TextField name="image" isRequired>
+                <Label>Image URL</Label>
+                <Input type="url" placeholder="https://..." className="rounded-2xl" />
+                <FieldError />
+              </TextField>
+            </div>
+
+            {/* Highlights */}
+            <div className="md:col-span-2">
+              <TextField name="highlights" isRequired>
+                <Label>Highlights (Comma separated)</Label>
+                <Input placeholder="Keynote, Workshops, Networking" className="rounded-2xl" />
+                <FieldError />
+              </TextField>
+            </div>
+
+            {/* Ticket Tier 1: General */}
+            {[...Array(totalTier)].map((_, index) => 
+            <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-cyan-500">
+              <TextField name="tier1_type">
+                <Label>Tier 1 Name</Label>
+                <Input placeholder="General" />
+              </TextField>
+              <TextField name="tier1_price" type="number">
+                <Label>Price</Label>
+                <Input placeholder="0" />
+              </TextField>
+              <TextField name="tier1_qty" type="number">
+                <Label>Quantity</Label>
+                <Input placeholder="0" />
+              </TextField>
+            </div>
+            )}
+
+            {/* Ticket Tier 2: VIP */}
+            {/* <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-amber-500">
+              <TextField name="tier2_type">
+                <Label>Tier 2 Name</Label>
+                <Input placeholder="VIP" />
+              </TextField>
+              <TextField name="tier2_price" type="number">
+                <Label>Price</Label>
+                <Input placeholder="0" />
+              </TextField>
+              <TextField name="tier2_qty" type="number">
+                <Label>Quantity</Label>
+                <Input placeholder="0" />
+              </TextField>
+            </div> */}
+            {/* Ticket Tier 3: VVIP */}
+            {/* <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-amber-500">
+              <TextField name="tier3_type">
+                <Label>Tier 2 Name</Label>
+                <Input placeholder="VVIP" />
+              </TextField>
+              <TextField name="tier3_price" type="number">
+                <Label>Price</Label>
+                <Input placeholder="0" />
+              </TextField>
+              <TextField name="tier3_qty" type="number">
+                <Label>Quantity</Label>
+                <Input placeholder="0" />
+              </TextField>
+            </div> */}
+
+            {/* Description */}
+            <div className="md:col-span-2">
+              <TextField name="description" isRequired>
+                <Label>Description</Label>
+                <TextArea placeholder="Describe your event in detail..." className="rounded-h-32 w-full" />
+                <FieldError />
+              </TextField>
+            </div>
+
+          </div>
+
+          <Button type="submit" variant="outline" className="rounded-none w-full bg-cyan-500 text-white">
+            Add Event
+          </Button>
+        </form>
+      </Card>
+    </div>
   );
 }
