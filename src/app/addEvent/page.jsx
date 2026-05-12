@@ -1,10 +1,15 @@
 "use client";
 import { eventCreate } from "@/lib/action";
 import { Button, Input, Select, Label, ListBox, TextArea, Card, TextField, FieldError } from "@heroui/react";
+import { useState } from "react";
 
 export default function AddEventPage() {
-  const [totalTier, serTotalTier] = useState(1)
-  
+  const [totalTiers, setTotalTiers] = useState(1)
+  console.log(totalTiers)
+  // if(totalTiers = 0){
+
+  // }
+
   return (
     <div className="min-h-screen bg-zinc-50 py-12 px-4 flex justify-center items-center">
       <Card className="w-full max-w-4xl p-8 shadow-xl border border-zinc-200 rounded-none">
@@ -106,9 +111,60 @@ export default function AddEventPage() {
               </TextField>
             </div>
 
+            {/* Ticket Tier, Simple method */}
+            <div className="md:col-span-2 space-y-6">
+              <div className="flex justify-between items-center border-b pb-2">
+                <h3 className="font-bold uppercase text-zinc-700 text-sm">Ticket Tiers</h3>
+                {totalTiers > 0 ? (
+                  <div>
+                    <Button
+                      type="button"
+                      onPress={() => setTotalTiers(totalTiers + 1)}
+                      className="bg-cyan-600 text-white rounded-none px-4 mr-3"
+                    >
+                      + Add Tier
+                    </Button>
+
+                    <Button
+                      type="button"
+                      onPress={() => setTotalTiers(totalTiers==1 ? 1 : totalTiers - 1 )} // ১ এর নিচে নামবে না
+                      className="bg-red-600 text-white rounded-none px-4"
+                    >
+                      Delete Tier
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    type="button"
+                    onPress={() => setTotalTiers(1)}
+                    className="bg-cyan-600 text-white rounded-none px-4"
+                  >
+                    + Add First Tier
+                  </Button>
+                )}
+              </div>
+              {[...Array(totalTiers)].map((_, index) =>
+                <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-cyan-500" key={index}>
+                  <TextField name={`tier${index + 1}_type`}>
+                    <Label>Tier 1 Name</Label>
+                    <Input placeholder="General" />
+                  </TextField>
+                  <TextField name={`tier${index + 1}_price`} type="number">
+                    <Label>Price</Label>
+                    <Input placeholder="0" />
+                  </TextField>
+                  <TextField name={`tier${index + 1}_quantity`} type="number">
+                    <Label>Quantity</Label>
+                    <Input placeholder="0" />
+                  </TextField>
+
+                </div>
+              )}
+
+            </div>
+
             {/* Ticket Tier 1: General */}
-            {[...Array(totalTier)].map((_, index) => 
-            <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-cyan-500">
+            {/* <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-amber-500">
               <TextField name="tier1_type">
                 <Label>Tier 1 Name</Label>
                 <Input placeholder="General" />
@@ -121,8 +177,7 @@ export default function AddEventPage() {
                 <Label>Quantity</Label>
                 <Input placeholder="0" />
               </TextField>
-            </div>
-            )}
+            </div> */}
 
             {/* Ticket Tier 2: VIP */}
             {/* <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-amber-500">
@@ -139,6 +194,7 @@ export default function AddEventPage() {
                 <Input placeholder="0" />
               </TextField>
             </div> */}
+
             {/* Ticket Tier 3: VVIP */}
             {/* <div className="md:col-span-2 grid grid-cols-3 gap-4 bg-zinc-100 p-4 border-l-4 border-amber-500">
               <TextField name="tier3_type">
