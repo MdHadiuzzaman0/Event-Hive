@@ -12,10 +12,13 @@ export default function Navbar() {
         <NavLink href="/addEvent">Add Event</NavLink>
       </div>
 
-      <Image
+      {/* <Image
         src="/Wanderlast.png" alt=''
         width={500} height={500}
-        className="w-30 h-full" />
+        className="w-30 h-full" /> */}
+        <div>
+          <h1 className="font-bold text-2xl bg-gradient text-gray-700">Event<span className="italic">Hive</span></h1>
+        </div>
 
       <div className="gap-5 flex">
         <NavLink href='/testPage'> Profile</NavLink>

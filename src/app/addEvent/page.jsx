@@ -2,13 +2,24 @@
 import { eventCreate } from "@/lib/action";
 import { Button, Input, Select, Label, ListBox, TextArea, Card, TextField, FieldError } from "@heroui/react";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
+import { toast } from "react-toastify";
 
 export default function AddEventPage() {
   const [totalTiers, setTotalTiers] = useState(1)
-  console.log(totalTiers)
-  // if(totalTiers = 0){
+  // console.log(totalTiers)
+  const router = useRouter()
 
-  // }
+  async function handleAdd(e){
+   e.preventDefault();
+    const title = e.target.title.value
+    const formData = new FormData(e.target)
+        const result = await eventCreate(formData)
+        if (result.success) {
+          toast.info(`${title} is added`)
+          router.push('/events')
+        }
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50 py-12 px-4 flex justify-center items-center">
@@ -20,7 +31,7 @@ export default function AddEventPage() {
           <p className="text-zinc-500 text-sm">Fill in the details to launch your next big experience.</p>
         </div>
 
-        <form action={eventCreate} className="p-4 md:p-10 space-y-8">
+        <form onSubmit={handleAdd} className="p-4 md:p-10 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {/* Title */}
@@ -127,7 +138,7 @@ export default function AddEventPage() {
 
                     <Button
                       type="button"
-                      onPress={() => setTotalTiers(totalTiers==1 ? 1 : totalTiers - 1 )} // ১ এর নিচে নামবে না
+                      onPress={() => setTotalTiers(totalTiers === 1 ? 1 : totalTiers - 1 )} // ১ এর নিচে নামবে না
                       className="bg-red-600 text-white rounded-none px-4"
                     >
                       Delete Tier

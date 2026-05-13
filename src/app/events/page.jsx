@@ -5,7 +5,7 @@ import EventCard from "@/components/EventCard";
 
 export default async function AllEventsPage() {
     const events = await getAllEvents();
-    console.log(events)
+    // console.log(events)
 
     return (
         <div className="min-h-screen bg-zinc-50 py-12 px-6">
@@ -105,7 +105,7 @@ export default async function AllEventsPage() {
                         ))
                     ) : (
                         <div className="col-span-full py-20 text-center">
-                            <p className="text-zinc-400 text-xl font-bold uppercase tracking-widest">
+                            <p className="text-zinc-400 text-3xl font-bold uppercase tracking-widest">
                                 No Events Found
                             </p>
                             

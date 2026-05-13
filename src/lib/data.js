@@ -4,6 +4,6 @@ export async function getAllEvents(){
 }
 
 export async function getEventById(id){
-    const res = await fetch (`http://localhost:8000/events/${id}`)
+    const res = await fetch (`http://localhost:8000/events/${id}`,{cache: 'no-store'})
     return await res.json();
 }
